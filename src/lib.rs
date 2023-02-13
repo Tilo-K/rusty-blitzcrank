@@ -1,5 +1,5 @@
 pub mod apiclient;
-pub mod dispatcher;
+mod dispatcher;
 pub mod region;
-pub mod summoner_endpoint;
+mod summoner_endpoint;
 pub mod types;
