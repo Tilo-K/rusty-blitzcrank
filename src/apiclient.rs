@@ -26,6 +26,22 @@ impl Client {
     ) -> Result<Summoner, summoner_endpoint::SummonerError> {
         return summoner_endpoint::get_summoner_by_accountid(accountid, region, &self.api_key);
     }
+
+    pub fn get_summoner_by_puuid(
+        &self,
+        puuid: String,
+        region: Region,
+    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+        return summoner_endpoint::get_summoner_by_puuid(puuid, region, &self.api_key);
+    }
+
+    pub fn get_summoner_by_id(
+        &self,
+        id: String,
+        region: Region,
+    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+        return summoner_endpoint::get_summoner_by_id(id, region, &self.api_key);
+    }
 }
 
 pub fn new(api_key: String) -> Client {
