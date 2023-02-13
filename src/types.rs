@@ -1,14 +1,15 @@
+#[allow(non_snake_case)]
 pub mod types {
     use serde_derive::{Deserialize, Serialize};
 
     #[derive(Debug, Deserialize, Serialize)]
     pub struct Summoner {
         id: String,
-        account_id: String,
+        accountId: String,
         puuid: String,
         name: String,
-        profile_icon_id: u32,
-        revision_date: i64,
-        summoner_level: u32,
+        profileIconId: u32,
+        revisionDate: i64,
+        summonerLevel: u32,
     }
 }
