@@ -1,6 +1,6 @@
 use crate::region::*;
 use crate::summoner_endpoint;
-use crate::types::types::*;
+use crate::types::*;
 
 pub struct Client {
     api_key: String,

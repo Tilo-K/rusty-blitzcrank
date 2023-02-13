@@ -1,6 +1,6 @@
 use crate::dispatcher::*;
 use crate::region::*;
-use crate::types::types::*;
+use crate::types::*;
 
 #[derive(Debug)]
 pub enum SummonerError {
