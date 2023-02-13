@@ -23,6 +23,18 @@ pub mod apiclient {
                 &self.api_key,
             );
         }
+
+        pub fn get_summoner_by_accountid(
+            &self,
+            accountid: String,
+            region: Region,
+        ) -> Result<Summoner, summoner_endpoint::summoner::SummonerError> {
+            return summoner_endpoint::summoner::get_summoner_by_accountid(
+                accountid,
+                region,
+                &self.api_key,
+            );
+        }
     }
 
     pub fn new(api_key: String) -> Client {
