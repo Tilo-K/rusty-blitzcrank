@@ -1,3 +1,4 @@
+use crate::matches_endpoint;
 use crate::region::*;
 use crate::summoner_endpoint;
 use crate::types::*;
@@ -61,6 +62,21 @@ impl Client {
             region,
             &self.api_key,
             self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_match_ids(
+        &self,
+        puuid: &str,
+        region: Region,
+        options: Option<GetMatchIdsOpts>,
+    ) -> Result<Vec<String>, BlitzError> {
+        return matches_endpoint::get_match_ids(
+            puuid,
+            region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+            options,
         );
     }
 }

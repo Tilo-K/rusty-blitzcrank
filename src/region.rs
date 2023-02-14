@@ -9,6 +9,7 @@ pub enum RegionError {
 
 pub struct Region {
     reg_str: String,
+    is_big: bool,
 }
 
 impl Region {
@@ -20,9 +21,13 @@ impl Region {
         if !is_valid {
             return Err(RegionError::InvalidRegionString);
         }
+        let big = reg_str.eq_ignore_ascii_case("EUROPE")
+            | reg_str.eq_ignore_ascii_case("ASIA")
+            | reg_str.eq_ignore_ascii_case("AMERICAS");
 
         Ok(Region {
             reg_str: reg_str.to_ascii_uppercase(),
+            is_big: big,
         })
     }
 
@@ -31,6 +36,10 @@ impl Region {
             "https://{}.api.riotgames.com/",
             self.reg_str.to_ascii_lowercase()
         );
+    }
+
+    pub fn is_big(&self) -> bool {
+        return self.is_big;
     }
 }
 
