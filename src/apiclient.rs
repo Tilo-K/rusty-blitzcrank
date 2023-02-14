@@ -4,6 +4,7 @@ use crate::types::*;
 
 pub struct Client {
     api_key: String,
+    wait_for_rate_limit: bool,
 }
 
 impl Client {
@@ -11,12 +12,21 @@ impl Client {
         return &self.api_key;
     }
 
+    pub fn set_wait_for_rate_limit(&mut self, set_to: bool) {
+        self.wait_for_rate_limit = set_to;
+    }
+
     pub fn get_summoner_by_name(
         &self,
         summoner_name: String,
         region: Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_name(summoner_name, region, &self.api_key);
+        return summoner_endpoint::get_summoner_by_name(
+            summoner_name,
+            region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+        );
     }
 
     pub fn get_summoner_by_accountid(
@@ -24,7 +34,12 @@ impl Client {
         accountid: String,
         region: Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_accountid(accountid, region, &self.api_key);
+        return summoner_endpoint::get_summoner_by_accountid(
+            accountid,
+            region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+        );
     }
 
     pub fn get_summoner_by_puuid(
@@ -32,16 +47,29 @@ impl Client {
         puuid: String,
         region: Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_puuid(puuid, region, &self.api_key);
+        return summoner_endpoint::get_summoner_by_puuid(
+            puuid,
+            region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+        );
     }
 
     pub fn get_summoner_by_id(&self, id: String, region: Region) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_id(id, region, &self.api_key);
+        return summoner_endpoint::get_summoner_by_id(
+            id,
+            region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+        );
     }
 }
 
 pub fn new(api_key: String) -> Client {
-    let client = Client { api_key };
+    let client = Client {
+        api_key,
+        wait_for_rate_limit: false,
+    };
 
     return client;
 }

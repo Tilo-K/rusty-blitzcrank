@@ -4,7 +4,11 @@ pub mod dispatcher {
     use tokio::time::{sleep, Duration};
 
     #[tokio::main]
-    pub async fn get(url: String, api_key: &str) -> Result<String, BlitzError> {
+    pub async fn get(
+        url: String,
+        api_key: &str,
+        wait_for_rate_limit: bool,
+    ) -> Result<String, BlitzError> {
         let client = Client::new();
         let response = client
             .get(url.clone())
@@ -26,6 +30,10 @@ pub mod dispatcher {
 
             match wait_time {
                 Some(t) => {
+                    if !wait_for_rate_limit {
+                        return Err(BlitzError::RateLimited);
+                    }
+
                     sleep(Duration::from_secs(t)).await;
                     resp = match client.get(url.clone()).send().await {
                         Ok(data) => data,
