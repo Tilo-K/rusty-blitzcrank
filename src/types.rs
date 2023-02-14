@@ -1,4 +1,16 @@
 use serde_derive::{Deserialize, Serialize};
+
+#[derive(Debug)]
+pub enum BlitzError {
+    RateLimited,
+    SummonerNotFound,
+    BadJson,
+    BadStatuscode(u16),
+    RequestError(Option<String>),
+    Forbidden,
+    NotFound,
+}
+
 #[allow(non_snake_case)]
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Summoner {

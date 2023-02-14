@@ -15,7 +15,7 @@ impl Client {
         &self,
         summoner_name: String,
         region: Region,
-    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+    ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_name(summoner_name, region, &self.api_key);
     }
 
@@ -23,7 +23,7 @@ impl Client {
         &self,
         accountid: String,
         region: Region,
-    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+    ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_accountid(accountid, region, &self.api_key);
     }
 
@@ -31,15 +31,11 @@ impl Client {
         &self,
         puuid: String,
         region: Region,
-    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+    ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_puuid(puuid, region, &self.api_key);
     }
 
-    pub fn get_summoner_by_id(
-        &self,
-        id: String,
-        region: Region,
-    ) -> Result<Summoner, summoner_endpoint::SummonerError> {
+    pub fn get_summoner_by_id(&self, id: String, region: Region) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_id(id, region, &self.api_key);
     }
 }
