@@ -41,6 +41,10 @@ impl Region {
     pub fn is_big(&self) -> bool {
         return self.is_big;
     }
+
+    pub fn get_endpoint(&self) -> String {
+        return self.reg_str.clone();
+    }
 }
 
 #[cfg(test)]

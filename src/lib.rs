@@ -1,3 +1,4 @@
+mod api_key;
 pub mod apiclient;
 mod dispatcher;
 mod matches_endpoint;
