@@ -13,7 +13,7 @@ pub struct Region {
 }
 
 impl Region {
-    pub fn from_str(reg_str: String) -> Result<Region, RegionError> {
+    pub fn from_str(reg_str: &str) -> Result<Region, RegionError> {
         let is_valid = VALID_REGIONS
             .iter()
             .any(|reg| reg.eq_ignore_ascii_case(&reg_str));
@@ -49,14 +49,14 @@ mod tests {
 
     #[test]
     fn create_valid_region() {
-        let reg = Region::from_str("EUW1".to_owned()).unwrap();
+        let reg = Region::from_str("EUW1").unwrap();
 
         assert!(reg.url().eq("https://euw1.api.riotgames.com/"))
     }
 
     #[test]
     fn create_invalid_region() {
-        let res = Region::from_str("CRINGE".to_owned());
+        let res = Region::from_str("CRINGE");
         assert!(res.is_err())
     }
 }

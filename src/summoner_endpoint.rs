@@ -3,7 +3,7 @@ use crate::region::*;
 use crate::types::*;
 
 pub fn get_summoner_by_name(
-    summoner_name: String,
+    summoner_name: &str,
     region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
@@ -27,7 +27,7 @@ pub fn get_summoner_by_name(
 }
 
 pub fn get_summoner_by_accountid(
-    accountid: String,
+    accountid: &str,
     region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
@@ -48,7 +48,7 @@ pub fn get_summoner_by_accountid(
 }
 
 pub fn get_summoner_by_puuid(
-    puuid: String,
+    puuid: &str,
     region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
@@ -69,7 +69,7 @@ pub fn get_summoner_by_puuid(
 }
 
 pub fn get_summoner_by_id(
-    id: String,
+    id: &str,
     region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,

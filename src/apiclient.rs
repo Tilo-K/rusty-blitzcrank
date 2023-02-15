@@ -20,7 +20,7 @@ impl Client {
 
     pub fn get_summoner_by_name(
         &self,
-        summoner_name: String,
+        summoner_name: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_name(
@@ -33,7 +33,7 @@ impl Client {
 
     pub fn get_summoner_by_accountid(
         &self,
-        accountid: String,
+        accountid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_accountid(
@@ -46,7 +46,7 @@ impl Client {
 
     pub fn get_summoner_by_puuid(
         &self,
-        puuid: String,
+        puuid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_puuid(
@@ -57,7 +57,7 @@ impl Client {
         );
     }
 
-    pub fn get_summoner_by_id(&self, id: String, region: &Region) -> Result<Summoner, BlitzError> {
+    pub fn get_summoner_by_id(&self, id: &str, region: &Region) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_id(
             id,
             region,
