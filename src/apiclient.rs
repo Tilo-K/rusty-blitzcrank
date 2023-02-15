@@ -1,6 +1,7 @@
 use crate::matches_endpoint;
 use crate::region::*;
 use crate::summoner_endpoint;
+use crate::timeline_types;
 use crate::types::*;
 
 pub struct Client {
@@ -82,6 +83,19 @@ impl Client {
 
     pub fn get_match(&self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
         return matches_endpoint::get_match(
+            id,
+            big_region,
+            &self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_match_timeline(
+        &self,
+        id: &str,
+        big_region: &Region,
+    ) -> Result<timeline_types::MatchTimeline, BlitzError> {
+        return matches_endpoint::get_match_timeline(
             id,
             big_region,
             &self.api_key,

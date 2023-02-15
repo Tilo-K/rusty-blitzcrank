@@ -1,5 +1,6 @@
 use crate::dispatcher::*;
 use crate::region::*;
+use crate::timeline_types;
 use crate::types::*;
 
 pub fn get_match_ids(
@@ -130,6 +131,32 @@ pub fn get_match(
     };
 
     let m: Match = match serde_json::from_str(&match_str) {
+        Ok(d) => d,
+        Err(_e) => return Err(BlitzError::BadJson),
+    };
+
+    return Ok(m);
+}
+
+pub fn get_match_timeline(
+    id: &str,
+    big_region: &Region,
+    api_key: &str,
+    wait_for_rate_limit: bool,
+) -> Result<timeline_types::MatchTimeline, BlitzError> {
+    if !big_region.is_big() {
+        return Err(BlitzError::InvalidRegion);
+    }
+
+    let url = format!("{}lol/match/v5/matches/{}/timeline", big_region.url(), id);
+    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit);
+
+    let match_str = match dispatch {
+        Ok(d) => d,
+        Err(e) => return Err(e),
+    };
+
+    let m: timeline_types::MatchTimeline = match serde_json::from_str(&match_str) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
     };
