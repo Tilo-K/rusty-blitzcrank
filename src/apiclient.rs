@@ -20,7 +20,7 @@ impl Client {
     pub fn get_summoner_by_name(
         &self,
         summoner_name: String,
-        region: Region,
+        region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_name(
             summoner_name,
@@ -33,7 +33,7 @@ impl Client {
     pub fn get_summoner_by_accountid(
         &self,
         accountid: String,
-        region: Region,
+        region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_accountid(
             accountid,
@@ -46,7 +46,7 @@ impl Client {
     pub fn get_summoner_by_puuid(
         &self,
         puuid: String,
-        region: Region,
+        region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_puuid(
             puuid,
@@ -56,7 +56,7 @@ impl Client {
         );
     }
 
-    pub fn get_summoner_by_id(&self, id: String, region: Region) -> Result<Summoner, BlitzError> {
+    pub fn get_summoner_by_id(&self, id: String, region: &Region) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_id(
             id,
             region,
@@ -68,15 +68,24 @@ impl Client {
     pub fn get_match_ids(
         &self,
         puuid: &str,
-        region: Region,
+        big_region: &Region,
         options: Option<GetMatchIdsOpts>,
     ) -> Result<Vec<String>, BlitzError> {
         return matches_endpoint::get_match_ids(
             puuid,
-            region,
+            big_region,
             &self.api_key,
             self.wait_for_rate_limit,
             options,
+        );
+    }
+
+    pub fn get_match(&self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
+        return matches_endpoint::get_match(
+            id,
+            big_region,
+            &self.api_key,
+            self.wait_for_rate_limit,
         );
     }
 }

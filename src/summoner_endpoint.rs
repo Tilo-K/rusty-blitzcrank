@@ -4,7 +4,7 @@ use crate::types::*;
 
 pub fn get_summoner_by_name(
     summoner_name: String,
-    region: Region,
+    region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
@@ -28,7 +28,7 @@ pub fn get_summoner_by_name(
 
 pub fn get_summoner_by_accountid(
     accountid: String,
-    region: Region,
+    region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
@@ -49,7 +49,7 @@ pub fn get_summoner_by_accountid(
 
 pub fn get_summoner_by_puuid(
     puuid: String,
-    region: Region,
+    region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
@@ -70,7 +70,7 @@ pub fn get_summoner_by_puuid(
 
 pub fn get_summoner_by_id(
     id: String,
-    region: Region,
+    region: &Region,
     api_key: &str,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
