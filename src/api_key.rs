@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::time::SystemTime;
 
+#[derive(Debug)]
 pub struct RateLimiter {
     requests: HashMap<String, Vec<u64>>,
     limit1: u16,
@@ -34,7 +35,8 @@ impl RateLimiter {
     }
 
     pub fn delete_old(&mut self, endpoint: String) {
-        let req = self.requests.get(&endpoint).unwrap();
+        let default = vec![];
+        let req = self.requests.get(&endpoint).unwrap_or(&default);
         let now = SystemTime::now();
 
         let seconds = match now.duration_since(SystemTime::UNIX_EPOCH) {
@@ -44,7 +46,7 @@ impl RateLimiter {
 
         let mut new: Vec<u64> = req
             .into_iter()
-            .filter(|time| (seconds - time.clone()) < self.limit2 as u64)
+            .filter(|time| (seconds - time.clone()) < self.limit2per as u64)
             .cloned()
             .collect();
 
@@ -104,6 +106,32 @@ impl RateLimiter {
         }
 
         return false;
+    }
+
+    pub fn wait_for(&mut self, endpoint: String) -> u64 {
+        if !self.is_limited(endpoint.clone()) {
+            return 0;
+        }
+
+        let now = SystemTime::now();
+
+        let seconds = match now.duration_since(SystemTime::UNIX_EPOCH) {
+            Ok(n) => n.as_secs(),
+            Err(_) => panic!("🛑Systemtime is fucked up my guy 🔥🔥🥵"),
+        };
+
+        let reqs = match self.requests.get(&endpoint) {
+            Some(n) => n,
+            _ => return 0,
+        };
+
+        let target =
+            reqs.get(0).unwrap_or(&(seconds - self.limit2per as u64)) + self.limit2per as u64;
+        if target < seconds {
+            return self.limit1per as u64;
+        }
+
+        return target - seconds;
     }
 }
 

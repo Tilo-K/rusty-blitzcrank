@@ -1,4 +1,5 @@
 pub mod dispatcher {
+    use crate::api_key::*;
     use crate::types::*;
     use reqwest::Client;
     use tokio::time::{sleep, Duration};
@@ -6,13 +7,26 @@ pub mod dispatcher {
     #[tokio::main]
     pub async fn get(
         url: String,
-        api_key: &str,
+        api_key: &mut ApiKey,
         wait_for_rate_limit: bool,
+        endpoint: String,
     ) -> Result<String, BlitzError> {
+        let is_limited = api_key.ratelimiter.is_limited(endpoint.clone());
+
+        if !wait_for_rate_limit && is_limited {
+            return Err(BlitzError::RateLimited);
+        } else if wait_for_rate_limit && is_limited {
+            sleep(Duration::from_secs(
+                api_key.ratelimiter.wait_for(endpoint.clone()),
+            ))
+            .await;
+        }
+
         let client = Client::new();
+        api_key.ratelimiter.add_call(endpoint.clone());
         let response = client
             .get(url.clone())
-            .header("X-Riot-Token", api_key)
+            .header("X-Riot-Token", &api_key.key)
             .send()
             .await;
 

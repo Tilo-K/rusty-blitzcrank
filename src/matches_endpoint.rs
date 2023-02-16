@@ -1,3 +1,4 @@
+use crate::api_key::*;
 use crate::dispatcher::*;
 use crate::region::*;
 use crate::timeline_types;
@@ -6,7 +7,7 @@ use crate::types::*;
 pub fn get_match_ids(
     puuid: &str,
     big_region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
     options: Option<GetMatchIdsOpts>,
 ) -> Result<Vec<String>, BlitzError> {
@@ -98,7 +99,7 @@ pub fn get_match_ids(
         }
     }
 
-    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit);
+    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint());
     let res = match dispatch {
         Ok(d) => d,
         Err(e) => return Err(e),
@@ -115,7 +116,7 @@ pub fn get_match_ids(
 pub fn get_match(
     id: &str,
     big_region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<Match, BlitzError> {
     if !big_region.is_big() {
@@ -123,7 +124,7 @@ pub fn get_match(
     }
 
     let url = format!("{}lol/match/v5/matches/{}", big_region.url(), id);
-    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit);
+    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint());
 
     let match_str = match dispatch {
         Ok(d) => d,
@@ -141,7 +142,7 @@ pub fn get_match(
 pub fn get_match_timeline(
     id: &str,
     big_region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<timeline_types::MatchTimeline, BlitzError> {
     if !big_region.is_big() {
@@ -149,7 +150,7 @@ pub fn get_match_timeline(
     }
 
     let url = format!("{}lol/match/v5/matches/{}/timeline", big_region.url(), id);
-    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit);
+    let dispatch = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint());
 
     let match_str = match dispatch {
         Ok(d) => d,

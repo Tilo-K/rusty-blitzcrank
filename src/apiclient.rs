@@ -1,3 +1,4 @@
+use crate::api_key::*;
 use crate::matches_endpoint;
 use crate::region::*;
 use crate::summoner_endpoint;
@@ -5,12 +6,12 @@ use crate::timeline_types;
 use crate::types::*;
 
 pub struct Client {
-    api_key: String,
+    api_key: ApiKey,
     wait_for_rate_limit: bool,
 }
 
 impl Client {
-    pub fn get_api_key(&self) -> &str {
+    pub fn get_api_key(&self) -> &ApiKey {
         return &self.api_key;
     }
 
@@ -19,55 +20,59 @@ impl Client {
     }
 
     pub fn get_summoner_by_name(
-        &self,
+        &mut self,
         summoner_name: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_name(
             summoner_name,
             region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 
     pub fn get_summoner_by_accountid(
-        &self,
+        &mut self,
         accountid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_accountid(
             accountid,
             region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 
     pub fn get_summoner_by_puuid(
-        &self,
+        &mut self,
         puuid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_puuid(
             puuid,
             region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 
-    pub fn get_summoner_by_id(&self, id: &str, region: &Region) -> Result<Summoner, BlitzError> {
+    pub fn get_summoner_by_id(
+        &mut self,
+        id: &str,
+        region: &Region,
+    ) -> Result<Summoner, BlitzError> {
         return summoner_endpoint::get_summoner_by_id(
             id,
             region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 
     pub fn get_match_ids(
-        &self,
+        &mut self,
         puuid: &str,
         big_region: &Region,
         options: Option<GetMatchIdsOpts>,
@@ -75,51 +80,53 @@ impl Client {
         return matches_endpoint::get_match_ids(
             puuid,
             big_region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
             options,
         );
     }
 
-    pub fn get_match(&self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
+    pub fn get_match(&mut self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
         return matches_endpoint::get_match(
             id,
             big_region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 
     pub fn get_match_timeline(
-        &self,
+        &mut self,
         id: &str,
         big_region: &Region,
     ) -> Result<timeline_types::MatchTimeline, BlitzError> {
         return matches_endpoint::get_match_timeline(
             id,
             big_region,
-            &self.api_key,
+            &mut self.api_key,
             self.wait_for_rate_limit,
         );
     }
 }
 
 pub fn new(api_key: String) -> Client {
+    let key = ApiKey::new(api_key);
+
     let client = Client {
-        api_key,
+        api_key: key,
         wait_for_rate_limit: false,
     };
 
     return client;
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub fn new_custom_rate(api_key: String, l1: u16, l1p: u16, l2: u16, l2p: u16) -> Client {
+    let key = ApiKey::new_custom_rate(api_key, l1, l1p, l2, l2p);
 
-    #[test]
-    fn create_client() {
-        let c = new("<UNIT_TEST_API_KEY>".to_owned());
-        assert!(c.get_api_key().eq("<UNIT_TEST_API_KEY>"));
-    }
+    let client = Client {
+        api_key: key,
+        wait_for_rate_limit: false,
+    };
+
+    return client;
 }

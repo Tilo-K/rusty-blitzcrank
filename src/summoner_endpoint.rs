@@ -1,3 +1,4 @@
+use crate::api_key::*;
 use crate::dispatcher::*;
 use crate::region::*;
 use crate::types::*;
@@ -5,7 +6,7 @@ use crate::types::*;
 pub fn get_summoner_by_name(
     summoner_name: &str,
     region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
     let mut url = region.url();
@@ -14,7 +15,7 @@ pub fn get_summoner_by_name(
         &url, summoner_name
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit) {
+    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
         Ok(d) => d,
         Err(e) => return Err(e),
     };
@@ -29,13 +30,13 @@ pub fn get_summoner_by_name(
 pub fn get_summoner_by_accountid(
     accountid: &str,
     region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/by-account/{}", &url, accountid);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit) {
+    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
         Ok(d) => d,
         Err(e) => return Err(e),
     };
@@ -50,13 +51,13 @@ pub fn get_summoner_by_accountid(
 pub fn get_summoner_by_puuid(
     puuid: &str,
     region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/by-puuid/{}", &url, puuid);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit) {
+    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
         Ok(d) => d,
         Err(e) => return Err(e),
     };
@@ -71,13 +72,13 @@ pub fn get_summoner_by_puuid(
 pub fn get_summoner_by_id(
     id: &str,
     region: &Region,
-    api_key: &str,
+    api_key: &mut ApiKey,
     wait_for_rate_limit: bool,
 ) -> Result<Summoner, BlitzError> {
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/{}", &url, id);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit) {
+    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
         Ok(d) => d,
         Err(e) => return Err(e),
     };
