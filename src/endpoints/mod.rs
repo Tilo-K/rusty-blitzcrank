@@ -1,2 +1,3 @@
-pub mod matches_endpoint;
-pub mod summoner_endpoint;
+pub mod mastery;
+pub mod matches;
+pub mod summoner;

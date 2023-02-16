@@ -1,6 +1,7 @@
 use crate::api_key::*;
-use crate::endpoints::matches_endpoint;
-use crate::endpoints::summoner_endpoint;
+use crate::endpoints::mastery;
+use crate::endpoints::matches;
+use crate::endpoints::summoner;
 use crate::region::*;
 use crate::timeline_types;
 use crate::types::*;
@@ -24,7 +25,7 @@ impl Client {
         summoner_name: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_name(
+        return summoner::get_summoner_by_name(
             summoner_name,
             region,
             &mut self.api_key,
@@ -37,7 +38,7 @@ impl Client {
         accountid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_accountid(
+        return summoner::get_summoner_by_accountid(
             accountid,
             region,
             &mut self.api_key,
@@ -50,7 +51,7 @@ impl Client {
         puuid: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_puuid(
+        return summoner::get_summoner_by_puuid(
             puuid,
             region,
             &mut self.api_key,
@@ -63,7 +64,7 @@ impl Client {
         id: &str,
         region: &Region,
     ) -> Result<Summoner, BlitzError> {
-        return summoner_endpoint::get_summoner_by_id(
+        return summoner::get_summoner_by_id(
             id,
             region,
             &mut self.api_key,
@@ -77,7 +78,7 @@ impl Client {
         big_region: &Region,
         options: Option<GetMatchIdsOpts>,
     ) -> Result<Vec<String>, BlitzError> {
-        return matches_endpoint::get_match_ids(
+        return matches::get_match_ids(
             puuid,
             big_region,
             &mut self.api_key,
@@ -87,12 +88,7 @@ impl Client {
     }
 
     pub fn get_match(&mut self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
-        return matches_endpoint::get_match(
-            id,
-            big_region,
-            &mut self.api_key,
-            self.wait_for_rate_limit,
-        );
+        return matches::get_match(id, big_region, &mut self.api_key, self.wait_for_rate_limit);
     }
 
     pub fn get_match_timeline(
@@ -100,9 +96,65 @@ impl Client {
         id: &str,
         big_region: &Region,
     ) -> Result<timeline_types::MatchTimeline, BlitzError> {
-        return matches_endpoint::get_match_timeline(
+        return matches::get_match_timeline(
             id,
             big_region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_champion_masteries(
+        &mut self,
+        id: &str,
+        region: &Region,
+    ) -> Result<Vec<ChampionMastery>, BlitzError> {
+        return mastery::get_champion_masteries(
+            id,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_champion_mastery_for_champion(
+        &mut self,
+        id: &str,
+        champion_id: u16,
+        region: &Region,
+    ) -> Result<ChampionMastery, BlitzError> {
+        return mastery::get_champion_mastery_for_champion(
+            id,
+            champion_id,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_champion_mastery_top(
+        &mut self,
+        id: &str,
+        count: Option<u16>,
+        region: &Region,
+    ) -> Result<Vec<ChampionMastery>, BlitzError> {
+        return mastery::get_champion_mastery_top(
+            id,
+            count,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_champion_mastery_score(
+        &mut self,
+        id: &str,
+        region: &Region,
+    ) -> Result<u64, BlitzError> {
+        return mastery::get_champion_mastery_score(
+            id,
+            region,
             &mut self.api_key,
             self.wait_for_rate_limit,
         );

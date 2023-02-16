@@ -594,3 +594,33 @@ pub enum Description {
     #[serde(rename = "subStyle")]
     SubStyle,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ChampionMastery {
+    #[serde(rename = "championId")]
+    champion_id: i64,
+
+    #[serde(rename = "championLevel")]
+    champion_level: i64,
+
+    #[serde(rename = "championPoints")]
+    champion_points: i64,
+
+    #[serde(rename = "lastPlayTime")]
+    last_play_time: i64,
+
+    #[serde(rename = "championPointsSinceLastLevel")]
+    champion_points_since_last_level: i64,
+
+    #[serde(rename = "championPointsUntilNextLevel")]
+    champion_points_until_next_level: i64,
+
+    #[serde(rename = "chestGranted")]
+    chest_granted: bool,
+
+    #[serde(rename = "tokensEarned")]
+    tokens_earned: i64,
+
+    #[serde(rename = "summonerId")]
+    summoner_id: String,
+}
