@@ -1,7 +1,7 @@
 use crate::api_key::*;
-use crate::matches_endpoint;
+use crate::endpoints::matches_endpoint;
+use crate::endpoints::summoner_endpoint;
 use crate::region::*;
-use crate::summoner_endpoint;
 use crate::timeline_types;
 use crate::types::*;
 

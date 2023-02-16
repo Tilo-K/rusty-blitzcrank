@@ -1,8 +1,7 @@
 mod api_key;
 pub mod apiclient;
 mod dispatcher;
-mod matches_endpoint;
+mod endpoints;
 pub mod region;
-mod summoner_endpoint;
 pub mod timeline_types;
 pub mod types;
