@@ -6,7 +6,7 @@ authors  = ["Tilo-K"]
 description = "A batterys included library for the Riot API"
 readme = "README.md"
 license = "MIT"
-keywords = ["RIOT", "League of Legends", "API", "wrapper"]
+keywords = ["RIOT", "LoL", "API", "wrapper"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
