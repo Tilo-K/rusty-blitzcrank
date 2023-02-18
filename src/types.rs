@@ -1,5 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, fmt};
 
 #[derive(Debug)]
 pub enum BlitzError {
@@ -623,4 +623,123 @@ pub struct ChampionMastery {
 
     #[serde(rename = "summonerId")]
     summoner_id: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LeagueEntry {
+    #[serde(rename = "leagueId")]
+    pub league_id: String,
+    #[serde(rename = "queueType")]
+    pub queue_type: String,
+    pub tier: String,
+    pub rank: String,
+    #[serde(rename = "summonerId")]
+    pub summoner_id: String,
+    #[serde(rename = "summonerName")]
+    pub summoner_name: String,
+    #[serde(rename = "leaguePoints")]
+    pub league_points: i64,
+    pub wins: i64,
+    pub losses: i64,
+    pub veteran: bool,
+    pub inactive: bool,
+    #[serde(rename = "freshBlood")]
+    pub fresh_blood: bool,
+    #[serde(rename = "hotStreak")]
+    pub hot_streak: bool,
+}
+
+pub enum Division {
+    I,
+    II,
+    III,
+    IV,
+}
+
+pub enum Tier {
+    DIAMOND,
+    PLATINUM,
+    GOLD,
+    SILVER,
+    BRONZE,
+    IRON,
+}
+#[allow(non_camel_case_types)]
+pub enum Queue {
+    RANKED_SOLO_5x5,
+    RANKED_FLEX_SR,
+    RANKED_FLEX_TT, // This is technically a part of the API but really outdated. R.I.P. Twisted Treeline
+}
+
+impl fmt::Display for Division {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Division::I => write!(f, "I"),
+            Division::II => write!(f, "II"),
+            Division::III => write!(f, "III"),
+            Division::IV => write!(f, "IV"),
+        }
+    }
+}
+
+impl fmt::Display for Tier {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Tier::DIAMOND => write!(f, "DIAMOND"),
+            Tier::PLATINUM => write!(f, "PLATINUM"),
+            Tier::GOLD => write!(f, "GOLD"),
+            Tier::SILVER => write!(f, "SILVER"),
+            Tier::BRONZE => write!(f, "BRONZE"),
+            Tier::IRON => write!(f, "IRON"),
+        }
+    }
+}
+
+impl fmt::Display for Queue {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Queue::RANKED_SOLO_5x5 => write!(f, "RANKED_SOLO_5x5"),
+            Queue::RANKED_FLEX_SR => write!(f, "RANKED_FLEX_SR"),
+            Queue::RANKED_FLEX_TT => write!(f, "RANKED_FLEX_TT"),
+        }
+    }
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LeagueList {
+    pub tier: String,
+    #[serde(rename = "leagueId")]
+    pub league_id: String,
+    pub queue: String,
+    pub name: String,
+    pub entries: Vec<Entry>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Entry {
+    #[serde(rename = "summonerId")]
+    pub summoner_id: String,
+    #[serde(rename = "summonerName")]
+    pub summoner_name: String,
+    #[serde(rename = "leaguePoints")]
+    pub league_points: i64,
+    pub rank: String,
+    pub wins: i64,
+    pub losses: i64,
+    pub veteran: bool,
+    pub inactive: bool,
+    #[serde(rename = "freshBlood")]
+    pub fresh_blood: bool,
+    #[serde(rename = "hotStreak")]
+    pub hot_streak: bool,
+    #[serde(rename = "miniSeries")]
+    pub mini_series: Option<MiniSeries>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct MiniSeries {
+    pub target: i64,
+    pub wins: i64,
+    pub losses: i64,
+    pub progress: String,
 }

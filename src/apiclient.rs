@@ -1,4 +1,5 @@
 use crate::api_key::*;
+use crate::endpoints::league;
 use crate::endpoints::mastery;
 use crate::endpoints::matches;
 use crate::endpoints::summoner;
@@ -154,6 +155,85 @@ impl Client {
     ) -> Result<u64, BlitzError> {
         return mastery::get_champion_mastery_score(
             id,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_league_entries(
+        &mut self,
+        id: &str,
+        region: &Region,
+    ) -> Result<Vec<LeagueEntry>, BlitzError> {
+        return league::get_league_entries(id, region, &mut self.api_key, self.wait_for_rate_limit);
+    }
+
+    pub fn get_league_entries_for_division(
+        &mut self,
+        division: Division,
+        queue: Queue,
+        tier: Tier,
+        page: Option<u16>,
+        region: &Region,
+    ) -> Result<Vec<LeagueEntry>, BlitzError> {
+        return league::get_league_entries_for_division(
+            division,
+            queue,
+            tier,
+            page,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_grandmasterleagues(
+        &mut self,
+        queue: Queue,
+        region: &Region,
+    ) -> Result<Vec<LeagueEntry>, BlitzError> {
+        return league::get_grandmasterleagues(
+            queue,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_challengerleagues(
+        &mut self,
+        queue: Queue,
+        region: &Region,
+    ) -> Result<Vec<LeagueEntry>, BlitzError> {
+        return league::get_challengerleagues(
+            queue,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_masterleagues(
+        &mut self,
+        queue: Queue,
+        region: &Region,
+    ) -> Result<Vec<LeagueEntry>, BlitzError> {
+        return league::get_masterleagues(
+            queue,
+            region,
+            &mut self.api_key,
+            self.wait_for_rate_limit,
+        );
+    }
+
+    pub fn get_league(
+        &mut self,
+        leagueid: &String,
+        region: &Region,
+    ) -> Result<LeagueList, BlitzError> {
+        return league::get_league(
+            leagueid,
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
