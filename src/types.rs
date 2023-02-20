@@ -871,3 +871,4 @@ pub struct FeaturedObservers {
     #[serde(rename = "encryptionKey")]
     pub encryption_key: String,
 }
+
