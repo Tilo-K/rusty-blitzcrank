@@ -1,4 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
+use serde_json::Value;
 use std::{collections::HashMap, fmt};
 
 #[derive(Debug)]
@@ -743,3 +744,131 @@ pub struct MiniSeries {
     pub losses: i64,
     pub progress: String,
 }
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct CurrentGameInfo {
+    #[serde(rename = "gameId")]
+    pub game_id: i64,
+    #[serde(rename = "mapId")]
+    pub map_id: i64,
+    #[serde(rename = "gameMode")]
+    pub game_mode: String,
+    #[serde(rename = "gameType")]
+    pub game_type: String,
+    #[serde(rename = "gameQueueConfigId")]
+    pub game_queue_config_id: i64,
+    pub participants: Vec<CurrGameParticipant>,
+    pub observers: Observers,
+    #[serde(rename = "platformId")]
+    pub platform_id: String,
+    #[serde(rename = "bannedChampions")]
+    pub banned_champions: Vec<BannedChampion>,
+    #[serde(rename = "gameStartTime")]
+    pub game_start_time: i64,
+    #[serde(rename = "gameLength")]
+    pub game_length: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct CurrGameParticipant {
+    #[serde(rename = "teamId")]
+    pub team_id: i64,
+    #[serde(rename = "spell1Id")]
+    pub spell1id: i64,
+    #[serde(rename = "spell2Id")]
+    pub spell2id: i64,
+    #[serde(rename = "championId")]
+    pub champion_id: i64,
+    #[serde(rename = "profileIconId")]
+    pub profile_icon_id: i64,
+    #[serde(rename = "summonerName")]
+    pub summoner_name: String,
+    pub bot: bool,
+    #[serde(rename = "summonerId")]
+    pub summoner_id: String,
+    #[serde(rename = "gameCustomizationObjects")]
+    pub game_customization_objects: Vec<Value>,
+    pub perks: PerksArr,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PerksArr {
+    #[serde(rename = "perkIds")]
+    pub perk_ids: Vec<i64>,
+    #[serde(rename = "perkStyle")]
+    pub perk_style: i64,
+    #[serde(rename = "perkSubStyle")]
+    pub perk_sub_style: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Observers {
+    #[serde(rename = "encryptionKey")]
+    pub encryption_key: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct BannedChampion {
+    #[serde(rename = "championId")]
+    pub champion_id: i64,
+    #[serde(rename = "teamId")]
+    pub team_id: i64,
+    #[serde(rename = "pickTurn")]
+    pub pick_turn: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct FeaturedGames {
+    #[serde(rename = "gameList")]
+    pub game_list: Vec<GameList>,
+    #[serde(rename = "clientRefreshInterval")]
+    pub client_refresh_interval: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct GameList {
+    #[serde(rename = "gameId")]
+    pub game_id: i64,
+    #[serde(rename = "mapId")]
+    pub map_id: i64,
+    #[serde(rename = "gameMode")]
+    pub game_mode: String,
+    #[serde(rename = "gameType")]
+    pub game_type: String,
+    #[serde(rename = "gameQueueConfigId")]
+    pub game_queue_config_id: i64,
+    pub participants: Vec<FeaturedParticipant>,
+    pub observers: FeaturedObservers,
+    #[serde(rename = "platformId")]
+    pub platform_id: String,
+    #[serde(rename = "bannedChampions")]
+    pub banned_champions: Vec<Value>,
+    #[serde(rename = "gameStartTime")]
+    pub game_start_time: i64,
+    #[serde(rename = "gameLength")]
+    pub game_length: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct FeaturedParticipant {
+    #[serde(rename = "teamId")]
+    pub team_id: i64,
+    #[serde(rename = "spell1Id")]
+    pub spell1id: i64,
+    #[serde(rename = "spell2Id")]
+    pub spell2id: i64,
+    #[serde(rename = "championId")]
+    pub champion_id: i64,
+    #[serde(rename = "profileIconId")]
+    pub profile_icon_id: i64,
+    #[serde(rename = "summonerName")]
+    pub summoner_name: String,
+    pub bot: bool,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct FeaturedObservers {
+    #[serde(rename = "encryptionKey")]
+    pub encryption_key: String,
+}
+

@@ -2,6 +2,7 @@ use crate::api_key::*;
 use crate::endpoints::league;
 use crate::endpoints::mastery;
 use crate::endpoints::matches;
+use crate::endpoints::spectator;
 use crate::endpoints::summoner;
 use crate::region::*;
 use crate::timeline_types;
@@ -239,6 +240,19 @@ impl Client {
             self.wait_for_rate_limit,
         );
     }
+
+    pub fn get_active_game(
+        &mut self,
+        id: &str,
+        region: &Region,
+    ) -> Result<CurrentGameInfo, BlitzError> {
+        return spectator::get_active_game(id, region, &mut self.api_key, self.wait_for_rate_limit);
+    }
+
+    pub fn get_featured_games(&mut self, region: &Region) -> Result<FeaturedGames, BlitzError> {
+        return spectator::get_featured_games(region, &mut self.api_key, self.wait_for_rate_limit);
+    }
+
 }
 
 pub fn new(api_key: String) -> Client {
