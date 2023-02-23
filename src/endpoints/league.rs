@@ -12,10 +12,7 @@ pub fn get_league_entries(
     let mut url = region.url();
     url = format!("{}lol/league/v4/entries/by-summoner/{}", &url, id);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let league_entrys: Vec<LeagueEntry> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -43,10 +40,7 @@ pub fn get_league_entries_for_division(
         page.unwrap_or(1)
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let league_entrys: Vec<LeagueEntry> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -66,10 +60,7 @@ pub fn get_grandmasterleagues(
         &url, queue
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let league_entrys: Vec<LeagueEntry> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -87,10 +78,7 @@ pub fn get_masterleagues(
     let mut url = region.url();
     url = format!("{}lol/league/v4/masterleagues/by-queue/{}", &url, queue);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let league_entrys: Vec<LeagueEntry> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -108,10 +96,8 @@ pub fn get_challengerleagues(
     let mut url = region.url();
     url = format!("{}lol/league/v4/challengerleagues/by-queue/{}", &url, queue);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let league_entrys: Vec<LeagueEntry> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -129,10 +115,7 @@ pub fn get_league(
     let mut url = region.url();
     url = format!("{}lol/league/v4/leagues/{}", &url, leagueid);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let league_list: LeagueList = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),

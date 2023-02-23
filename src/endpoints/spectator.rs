@@ -12,10 +12,8 @@ pub fn get_active_game(
     let mut url = region.url();
     url = format!("{}lol/spectator/v4/active-games/by-summoner/{}", &url, id);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let curr_game: CurrentGameInfo = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -32,10 +30,8 @@ pub fn get_featured_games(
     let mut url = region.url();
     url = format!("{}lol/spectator/v4/featured-games", &url);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let featured_games: FeaturedGames = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),

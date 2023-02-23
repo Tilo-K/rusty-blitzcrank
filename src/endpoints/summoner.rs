@@ -15,10 +15,7 @@ pub fn get_summoner_by_name(
         &url, summoner_name
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let summoner: Summoner = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -36,10 +33,8 @@ pub fn get_summoner_by_accountid(
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/by-account/{}", &url, accountid);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let summoner: Summoner = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -57,10 +52,8 @@ pub fn get_summoner_by_puuid(
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/by-puuid/{}", &url, puuid);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let summoner: Summoner = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -78,10 +71,7 @@ pub fn get_summoner_by_id(
     let mut url = region.url();
     url = format!("{}lol/summoner/v4/summoners/{}", &url, id);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let summoner: Summoner = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
