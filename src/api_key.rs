@@ -165,3 +165,39 @@ impl ApiKey {
         };
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::ApiKey;
+
+    #[test]
+    fn create_default_api_key() {
+        let key = ApiKey::new("<TEST-KEY>".to_owned());
+
+        assert!(key.key.eq("<TEST-KEY>"));
+    }
+
+    #[test]
+    fn create_key_with_default_rate() {
+        let key = ApiKey::new("<TEST-KEY>".to_owned());
+
+        assert!(
+            key.ratelimiter.limit1 == 20
+                && key.ratelimiter.limit1per == 1
+                && key.ratelimiter.limit2 == 100
+                && key.ratelimiter.limit2per == 120
+        );
+    }
+
+    #[test]
+    fn create_key_with_custom_rate() {
+        let key = ApiKey::new_custom_rate("<TEST-KEY>".to_owned(), 1, 69, 420, 1337);
+
+        assert!(
+            key.ratelimiter.limit1 == 1
+                && key.ratelimiter.limit1per == 69
+                && key.ratelimiter.limit2 == 420
+                && key.ratelimiter.limit2per == 1337
+        );
+    }
+}
