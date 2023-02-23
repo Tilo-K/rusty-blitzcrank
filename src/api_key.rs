@@ -200,4 +200,16 @@ mod tests {
                 && key.ratelimiter.limit2per == 1337
         );
     }
+
+    #[test]
+    fn hit_rate_limit() {
+        let mut key = ApiKey::new("<TEST-KEY>".to_owned());
+        let end = "TEST".to_owned();
+
+        for n in 0..key.ratelimiter.limit2 {
+            key.ratelimiter.add_call(end.clone());
+        }
+
+        assert!(key.ratelimiter.is_limited(end.clone()));
+    }
 }
