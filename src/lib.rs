@@ -1,3 +1,4 @@
+pub mod analysis;
 mod api_key;
 pub mod apiclient;
 mod dispatcher;

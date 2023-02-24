@@ -107,7 +107,7 @@ pub struct Info {
     pub tournament_code: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Participant {
     #[serde(rename = "allInPings")]
     pub all_in_pings: i64,
@@ -473,7 +473,7 @@ pub struct Participant {
     pub win: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Perks {
     #[serde(rename = "statPerks")]
     pub stat_perks: StatPerks,
@@ -482,7 +482,7 @@ pub struct Perks {
     pub styles: Vec<Style>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct StatPerks {
     #[serde(rename = "defense")]
     pub defense: i64,
@@ -494,7 +494,7 @@ pub struct StatPerks {
     pub offense: i64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Style {
     #[serde(rename = "description")]
     pub description: Description,
@@ -506,7 +506,7 @@ pub struct Style {
     pub style: i64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Selection {
     #[serde(rename = "perk")]
     pub perk: i64,
@@ -587,7 +587,7 @@ pub struct Metadata {
     pub participants: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub enum Description {
     #[serde(rename = "primaryStyle")]
     PrimaryStyle,
@@ -871,4 +871,3 @@ pub struct FeaturedObservers {
     #[serde(rename = "encryptionKey")]
     pub encryption_key: String,
 }
-
