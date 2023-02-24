@@ -73,3 +73,22 @@ pub mod dispatcher {
         return Err(BlitzError::BadStatuscode(resp.status().as_u16()));
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::dispatcher::get;
+    use crate::api_key::*;
+
+    #[test]
+    fn make_get_request() {
+        let req = get(
+            "https://dummyjson.com/test".to_owned(),
+            &mut ApiKey::new("<Unit>".to_owned()),
+            false,
+            "TEST".to_owned(),
+        )
+        .unwrap();
+
+        assert!(req.eq("{\"status\":\"ok\",\"method\":\"GET\"}"));
+    }
+}

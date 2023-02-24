@@ -15,10 +15,8 @@ pub fn get_champion_masteries(
         &url, id
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
+
     let masterys: Vec<ChampionMastery> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -40,10 +38,7 @@ pub fn get_champion_mastery_for_champion(
         &url, id, champion_id
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let mastery: ChampionMastery = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -67,10 +62,7 @@ pub fn get_champion_mastery_top(
         count.unwrap_or(3)
     );
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let mastery: Vec<ChampionMastery> = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
@@ -88,10 +80,7 @@ pub fn get_champion_mastery_score(
     let mut url = region.url();
     url = format!("{}lol/champion-mastery/v4/scores/by-summoner/{}", &url, id);
 
-    let res = match dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint()) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let masterys: u64 = match serde_json::from_str(&res) {
         Ok(d) => d,
         Err(_e) => return Err(BlitzError::BadJson),
