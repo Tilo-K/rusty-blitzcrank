@@ -121,6 +121,7 @@ pub fn get_match(
 
     let m: Match = serde_json::from_str(&match_str).map_err(|_| BlitzError::BadJson)?;
 
+
     return Ok(m);
 }
 

@@ -20,6 +20,7 @@ pub fn get_champion_masteries(
     let masterys: Vec<ChampionMastery> =
         serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
+
     Ok(masterys)
 }
 
@@ -38,6 +39,7 @@ pub fn get_champion_mastery_for_champion(
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let mastery: ChampionMastery = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
+
 
     Ok(mastery)
 }
@@ -61,6 +63,7 @@ pub fn get_champion_mastery_top(
     let mastery: Vec<ChampionMastery> =
         serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
+
     Ok(mastery)
 }
 
@@ -75,6 +78,7 @@ pub fn get_champion_mastery_score(
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let masterys: u64 = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
+
 
     Ok(masterys)
 }

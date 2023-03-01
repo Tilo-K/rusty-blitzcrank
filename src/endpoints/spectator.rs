@@ -15,6 +15,7 @@ pub fn get_active_game(
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
     let curr_game: CurrentGameInfo = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
+
     Ok(curr_game)
 }
 

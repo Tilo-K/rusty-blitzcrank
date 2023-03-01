@@ -253,10 +253,10 @@ impl Client {
     pub fn get_featured_games(&mut self, region: &Region) -> Result<FeaturedGames, BlitzError> {
         return spectator::get_featured_games(region, &mut self.api_key, self.wait_for_rate_limit);
     }
-
     pub fn get_platform_data(&mut self, region: &Region) -> Result<PlatformData, BlitzError> {
         return status::get_platform_data(region, &mut self.api_key, self.wait_for_rate_limit);
     }
+
 }
 
 pub fn new(api_key: String) -> Client {
