@@ -16,10 +16,7 @@ pub fn get_summoner_by_name(
     );
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
-    let summoner: Summoner = match serde_json::from_str(&res) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let summoner: Summoner = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
     Ok(summoner)
 }
@@ -35,10 +32,7 @@ pub fn get_summoner_by_accountid(
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
 
-    let summoner: Summoner = match serde_json::from_str(&res) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let summoner: Summoner = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
     Ok(summoner)
 }
@@ -54,10 +48,7 @@ pub fn get_summoner_by_puuid(
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
 
-    let summoner: Summoner = match serde_json::from_str(&res) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let summoner: Summoner = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
     Ok(summoner)
 }
@@ -72,10 +63,6 @@ pub fn get_summoner_by_id(
     url = format!("{}lol/summoner/v4/summoners/{}", &url, id);
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, region.get_endpoint())?;
-    let summoner: Summoner = match serde_json::from_str(&res) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
-
+    let summoner: Summoner = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
     Ok(summoner)
 }

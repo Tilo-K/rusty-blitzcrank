@@ -101,10 +101,7 @@ pub fn get_match_ids(
 
     let res = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
 
-    let history: Vec<String> = match serde_json::from_str(&res) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let history: Vec<String> = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
     return Ok(history);
 }
@@ -122,10 +119,7 @@ pub fn get_match(
     let url = format!("{}lol/match/v5/matches/{}", big_region.url(), id);
     let match_str = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
 
-    let m: Match = match serde_json::from_str(&match_str) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let m: Match = serde_json::from_str(&match_str).map_err(|_| BlitzError::BadJson)?;
 
     return Ok(m);
 }
@@ -143,10 +137,8 @@ pub fn get_match_timeline(
     let url = format!("{}lol/match/v5/matches/{}/timeline", big_region.url(), id);
     let match_str = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
 
-    let m: timeline_types::MatchTimeline = match serde_json::from_str(&match_str) {
-        Ok(d) => d,
-        Err(_e) => return Err(BlitzError::BadJson),
-    };
+    let m: timeline_types::MatchTimeline =
+        serde_json::from_str(&match_str).map_err(|_| BlitzError::BadJson)?;
 
     return Ok(m);
 }
