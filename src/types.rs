@@ -871,3 +871,48 @@ pub struct FeaturedObservers {
     #[serde(rename = "encryptionKey")]
     pub encryption_key: String,
 }
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PlatformData {
+    pub id: String,
+    pub name: String,
+    pub locales: Vec<String>,
+    pub maintenances: Vec<Value>,
+    pub incidents: Vec<Incident>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Incident {
+    pub titles: Vec<Title>,
+    pub maintenance_status: Value,
+    pub incident_severity: String,
+    pub updated_at: Option<String>,
+    pub archive_at: Value,
+    pub created_at: String,
+    pub updates: Vec<Update>,
+    pub platforms: Vec<String>,
+    pub id: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Title {
+    pub locale: String,
+    pub content: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Update {
+    pub translations: Vec<Translation>,
+    pub updated_at: String,
+    pub author: String,
+    pub created_at: String,
+    pub publish: bool,
+    pub publish_locations: Vec<String>,
+    pub id: i64,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Translation {
+    pub locale: String,
+    pub content: String,
+}

@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 0.1.4
+
+* Code improvement
+* Added Platform data API
+
 ## 0.1.3
 
 * Some Code cleanup

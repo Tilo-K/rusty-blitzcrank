@@ -1,6 +1,6 @@
 [package]
 name = "rusty-blitzcrank"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors  = ["Tilo-K"]
 description = "A batterys included library for the Riot API"
