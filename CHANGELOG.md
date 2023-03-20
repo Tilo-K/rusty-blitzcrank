@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.5
+
+* Made the client clonable
 
 ## 0.1.4
 

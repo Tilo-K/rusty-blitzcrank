@@ -23,6 +23,10 @@ impl RateLimiter {
         }
     }
 
+    pub fn get_limits(&self) -> (u16, u16, u16, u16) {
+        return (self.limit1, self.limit1per, self.limit2, self.limit2per);
+    }
+
     pub fn new_custom(limit1: u16, limit1per: u16, limit2: u16, limit2per: u16) -> RateLimiter {
         RateLimiter {
             requests: HashMap::new(),

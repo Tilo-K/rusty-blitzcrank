@@ -256,7 +256,6 @@ impl Client {
     pub fn get_platform_data(&mut self, region: &Region) -> Result<PlatformData, BlitzError> {
         return status::get_platform_data(region, &mut self.api_key, self.wait_for_rate_limit);
     }
-
 }
 
 pub fn new(api_key: String) -> Client {
@@ -279,4 +278,13 @@ pub fn new_custom_rate(api_key: String, l1: u16, l1p: u16, l2: u16, l2p: u16) ->
     };
 
     return client;
+}
+
+impl std::clone::Clone for Client {
+    fn clone(&self) -> Self {
+        let (r1, r1per, r2, r2per) = self.api_key.ratelimiter.get_limits();
+        let client = new_custom_rate(self.api_key.key.clone(), r1, r1per, r2, r2per);
+
+        return client;
+    }
 }
