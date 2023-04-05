@@ -23,7 +23,7 @@ impl Client {
         self.wait_for_rate_limit = set_to;
     }
 
-    pub fn get_summoner_by_name(
+    pub async fn get_summoner_by_name(
         &mut self,
         summoner_name: &str,
         region: &Region,
@@ -33,10 +33,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_summoner_by_accountid(
+    pub async fn get_summoner_by_accountid(
         &mut self,
         accountid: &str,
         region: &Region,
@@ -46,10 +47,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_summoner_by_puuid(
+    pub async fn get_summoner_by_puuid(
         &mut self,
         puuid: &str,
         region: &Region,
@@ -59,10 +61,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_summoner_by_id(
+    pub async fn get_summoner_by_id(
         &mut self,
         id: &str,
         region: &Region,
@@ -72,10 +75,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_match_ids(
+    pub async fn get_match_ids(
         &mut self,
         puuid: &str,
         big_region: &Region,
@@ -87,14 +91,16 @@ impl Client {
             &mut self.api_key,
             self.wait_for_rate_limit,
             options,
-        );
+        )
+        .await;
     }
 
-    pub fn get_match(&mut self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
-        return matches::get_match(id, big_region, &mut self.api_key, self.wait_for_rate_limit);
+    pub async fn get_match(&mut self, id: &str, big_region: &Region) -> Result<Match, BlitzError> {
+        return matches::get_match(id, big_region, &mut self.api_key, self.wait_for_rate_limit)
+            .await;
     }
 
-    pub fn get_match_timeline(
+    pub async fn get_match_timeline(
         &mut self,
         id: &str,
         big_region: &Region,
@@ -104,10 +110,11 @@ impl Client {
             big_region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_champion_masteries(
+    pub async fn get_champion_masteries(
         &mut self,
         id: &str,
         region: &Region,
@@ -117,10 +124,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_champion_mastery_for_champion(
+    pub async fn get_champion_mastery_for_champion(
         &mut self,
         id: &str,
         champion_id: u16,
@@ -132,10 +140,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_champion_mastery_top(
+    pub async fn get_champion_mastery_top(
         &mut self,
         id: &str,
         count: Option<u16>,
@@ -147,10 +156,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_champion_mastery_score(
+    pub async fn get_champion_mastery_score(
         &mut self,
         id: &str,
         region: &Region,
@@ -160,18 +170,20 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_league_entries(
+    pub async fn get_league_entries(
         &mut self,
         id: &str,
         region: &Region,
     ) -> Result<Vec<LeagueEntry>, BlitzError> {
-        return league::get_league_entries(id, region, &mut self.api_key, self.wait_for_rate_limit);
+        return league::get_league_entries(id, region, &mut self.api_key, self.wait_for_rate_limit)
+            .await;
     }
 
-    pub fn get_league_entries_for_division(
+    pub async fn get_league_entries_for_division(
         &mut self,
         division: Division,
         queue: Queue,
@@ -187,10 +199,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_grandmasterleagues(
+    pub async fn get_grandmasterleagues(
         &mut self,
         queue: Queue,
         region: &Region,
@@ -200,10 +213,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_challengerleagues(
+    pub async fn get_challengerleagues(
         &mut self,
         queue: Queue,
         region: &Region,
@@ -213,10 +227,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_masterleagues(
+    pub async fn get_masterleagues(
         &mut self,
         queue: Queue,
         region: &Region,
@@ -226,10 +241,11 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_league(
+    pub async fn get_league(
         &mut self,
         leagueid: &String,
         region: &Region,
@@ -239,22 +255,29 @@ impl Client {
             region,
             &mut self.api_key,
             self.wait_for_rate_limit,
-        );
+        )
+        .await;
     }
 
-    pub fn get_active_game(
+    pub async fn get_active_game(
         &mut self,
         id: &str,
         region: &Region,
     ) -> Result<CurrentGameInfo, BlitzError> {
-        return spectator::get_active_game(id, region, &mut self.api_key, self.wait_for_rate_limit);
+        return spectator::get_active_game(id, region, &mut self.api_key, self.wait_for_rate_limit)
+            .await;
     }
 
-    pub fn get_featured_games(&mut self, region: &Region) -> Result<FeaturedGames, BlitzError> {
-        return spectator::get_featured_games(region, &mut self.api_key, self.wait_for_rate_limit);
+    pub async fn get_featured_games(
+        &mut self,
+        region: &Region,
+    ) -> Result<FeaturedGames, BlitzError> {
+        return spectator::get_featured_games(region, &mut self.api_key, self.wait_for_rate_limit)
+            .await;
     }
-    pub fn get_platform_data(&mut self, region: &Region) -> Result<PlatformData, BlitzError> {
-        return status::get_platform_data(region, &mut self.api_key, self.wait_for_rate_limit);
+    pub async fn get_platform_data(&mut self, region: &Region) -> Result<PlatformData, BlitzError> {
+        return status::get_platform_data(region, &mut self.api_key, self.wait_for_rate_limit)
+            .await;
     }
 }
 

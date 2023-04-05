@@ -4,7 +4,7 @@ use crate::region::*;
 use crate::timeline_types;
 use crate::types::*;
 
-pub fn get_match_ids(
+pub async fn get_match_ids(
     puuid: &str,
     big_region: &Region,
     api_key: &mut ApiKey,
@@ -99,14 +99,14 @@ pub fn get_match_ids(
         }
     }
 
-    let res = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
+    let res = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint()).await?;
 
     let history: Vec<String> = serde_json::from_str(&res).map_err(|_| BlitzError::BadJson)?;
 
     return Ok(history);
 }
 
-pub fn get_match(
+pub async fn get_match(
     id: &str,
     big_region: &Region,
     api_key: &mut ApiKey,
@@ -117,15 +117,15 @@ pub fn get_match(
     }
 
     let url = format!("{}lol/match/v5/matches/{}", big_region.url(), id);
-    let match_str = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
+    let match_str =
+        dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint()).await?;
 
     let m: Match = serde_json::from_str(&match_str).map_err(|_| BlitzError::BadJson)?;
-
 
     return Ok(m);
 }
 
-pub fn get_match_timeline(
+pub async fn get_match_timeline(
     id: &str,
     big_region: &Region,
     api_key: &mut ApiKey,
@@ -136,7 +136,8 @@ pub fn get_match_timeline(
     }
 
     let url = format!("{}lol/match/v5/matches/{}/timeline", big_region.url(), id);
-    let match_str = dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint())?;
+    let match_str =
+        dispatcher::get(url, api_key, wait_for_rate_limit, big_region.get_endpoint()).await?;
 
     let m: timeline_types::MatchTimeline =
         serde_json::from_str(&match_str).map_err(|_| BlitzError::BadJson)?;
