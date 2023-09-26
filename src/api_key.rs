@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::ops::Deref;
 use std::time::SystemTime;
 
 #[derive(Debug)]
@@ -50,7 +51,7 @@ impl RateLimiter {
 
         let mut new: Vec<u64> = req
             .into_iter()
-            .filter(|time| (seconds - time.clone()) < self.limit2per as u64)
+            .filter(|time| (seconds - time.deref().deref()) < self.limit2per as u64)
             .cloned()
             .collect();
 
